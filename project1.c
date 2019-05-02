@@ -236,8 +236,7 @@ void sjf(process *ps, int num_ps)
 			et_ns = et % t;
             syscall(335, getpid(), st_s, st_ns, et_s, et_ns);
 			exit(0);
-		}
-		
+		}		
 	}
 	
 	//wait for all child process
