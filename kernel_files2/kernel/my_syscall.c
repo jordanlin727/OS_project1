@@ -7,7 +7,7 @@ const long long t = 1E9;
 
 SYSCALL_DEFINE5(my_print, int, pid, long, st_s, long, st_ns, long, et_s, long, et_ns)
 {
-	printk("[project1] %d %ld.%ld %ld.%ld\n", pid, st_s, st_ns, et_s, et_ns);
+	printk("[project1] %d %ld.%09ld %ld.%09ld\n", pid, st_s, st_ns, et_s, et_ns);
 	return 0;
 }
 
