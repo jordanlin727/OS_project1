@@ -267,7 +267,8 @@ int psjf(process *ps, int num_ps)
 	waitpid(pid, &status, WUNTRACED);
 	long int st[num_ps], et[num_ps];
 	long st_s[num_ps], st_ns[num_ps], et_s[num_ps], et_ns[num_ps];
-	int found = 1;
+	int order[num_ps]; // finish order
+	int index = 0, found = 1;
 	while (found) {
 		found = 0;
 		int min_exectime = INT_MAX;
@@ -315,11 +316,15 @@ int psjf(process *ps, int num_ps)
 			et[current_process] = syscall(336);
 			et_s[current_process] = et[current_process] / t;
 			et_ns[current_process] = et[current_process] % t;
-			// printf("%d end\n", getpid());
+			order[index] = current_process;
+			index++;
 		}
 	}
-	for (int i = 0; i < num_ps; i++)
-		syscall(335, ps[i].pid, st_s[i], st_ns[i], et_s[i], et_ns[i]);
+	int j;
+	for (int i = 0; i < num_ps; i++) {
+		j = order[i];
+		syscall(335, ps[j].pid, st_s[j], st_ns[j], et_s[j], et_ns[j]);
+	}
 	return 0;
 }
 // round robin scheduling
